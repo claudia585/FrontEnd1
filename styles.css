@@ -1,0 +1,96 @@
+*{
+    margin: 0;/*elimina los amrgenes*/
+    padding: 0;/*elimuna los rellenos*/
+    box-sizing: border-box;/*incluye padding y border en el ancho y alto de los elementos */
+}
+
+/*variables con css seran definidos en root para un uso global*/
+
+:root{
+    --index: calc(1vw + 1vh);/*define una variable que se adapta al tamaño de la ventana*/
+    --transition: cubic-bezier(.1, .7, 0, 1);/*define una curva de transicion personalizada*/
+}
+
+/*estilo del cuerpo*/
+body{
+    background-color: #282a36;/*establece un fondo oscuro*/
+
+}
+
+/*contenedor principal*/
+.wrapper{
+    display: flex;/*utiliza flexbox orara organizar el contenido o los elementos*/
+    align-items: center;/*centra de forma vertical*/
+    justify-content: center;/*centra de forma horizontal*/
+    height: 100vh;/*altura completa*/
+}
+
+/*contenedor de los elemntos*/
+.items{
+    display: flex;/*utiliza flexbox para organizar  los elementos */
+    gap:0.4rem;/*espacio estre los elementos*/
+    perspective: calc(var(--index)*35);/*aplica perspectivas para efecto */
+}
+.item {
+    width:  calc(var(--index)*3);/*Ancho dinamico en la variable*/
+    height: calc(var(--index)*12);/*alto dinamico en la variable*/
+    background-color: #222;/*color de fondo de los elementos*/
+    background-size: cover;/*asegura que la imagen de fondo cubra el elemento*/
+    background-position: center;/*centra la imagen de fondo*/
+    cursor: pointer;/*cambia el cursor al pasar sobre el elemento*/
+    filter: grayscale(1) brightness(.5);/*aplica un filtro de escala de grises y brillo*/
+    transition: transform 1.25s var(--transition), filter 3s var(--transition), width 1.25s var(--transition);/*define las transiciones para  varios estilos */
+    will-change: transform, filter, rotateY width;/*aviasa al navegador que propiedades cambia , optimizando  el rendimiento*/
+}
+/*crea un efecto visual*/
+.items::before, .item::after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 200px;
+    right: calc(var(--index)* -1);
+
+
+}
+/*posicion  a la izquierda*/
+.item::after{
+    left: calc(var(--index)*-1);
+}
+
+/*efecto al pasar  el mause*/
+.items .item:hover{
+    filter:inherit;
+    transform: translateZ(calc(var(--index) *10)) rotateY(-35deg);
+}
+
+/*efecto para los elementos a la izquierda  del elemento hover*/
+.items .item:has(+ :hover){
+    filter: inherit;/*hereda el filtro origional*/
+    transform: translateZ(calc(var(--index) * 8.5)) rotateY(-35deg);/*mueve y rota el elemento a la izquierda*/
+}
+
+.items .item:has(+ * + :hover){
+    filter: inherit;/*hereda el filtro origional*/
+    transform: translateZ(calc(var(--index)* 5.6)) rotateY(-40deg);/*mueve y rota el elemento a la izquierda*/
+}
+.items .item:has(+ * + * + :hover){
+    filter: inherit;/*hereda el filtro origional*/
+    transform: translateZ(calc(var(--index) *2.5)) rotateY(-30deg);/*mueve y rota el elemento a la izquierda*/
+}
+
+
+.items .item:has(+ * + * + * + :hover){
+    filter: inherit;/*hereda el filtro origional*/
+    transform: translateZ(calc(var(--index)* .6)) rotateY(-15deg);/*mueve y rota el elemento a la izquierda*/
+}
+
+/*efectos para la activacion o enfoque  de un elemento*/
+.items .item:active, .items .item:focus{
+    width: 28vw;
+    filter: inherit;
+    z-index: 100;
+    transform: translateZ(calc(var(--index)* 10));
+    margin: 0 .45vw;
+}
+
+
