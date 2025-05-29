@@ -1,2 +1,0 @@
-# FrontEnd1
-EJEMPLO FULL STACK
